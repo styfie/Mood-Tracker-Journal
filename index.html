@@ -1,0 +1,38 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mood Tracker Journal</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Mood Tracker Journal</h1>
+
+    <section class="mood-input">
+      <h2>How do you feel today?</h2>
+      <div class="emoji-picker">
+        <button>😊</button>
+        <button>😢</button>
+        <button>😠</button>
+        <button>😴</button>
+        <button>😐</button>
+      </div>
+
+      <textarea placeholder="Why do you feel this way? (optional)" rows="4"></textarea>
+      <button class="save-btn">Save Mood</button>
+    </section>
+
+    <section class="calendar-section">
+      <h2>Mood Calendar</h2>
+      <div id="calendar">
+        <!-- calendar will go here -->
+      </div>
+    </section>
+  </div>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
+
