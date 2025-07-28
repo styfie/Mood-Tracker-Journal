@@ -86,6 +86,22 @@ textarea {
   background-color: #f6bfb8;
 }
 
+.quote-box {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #fef6ed;
+  border-left: 4px solid #e1a1a1;
+  font-size: 1rem;
+  color: #555;
+  border-radius: 10px;
+  min-height: 40px;
+}
+
+.emoji-picker button.selected {
+  background-color: #fceee3;
+  border-color: #e9cbb8;
+}
+
 .calendar-section h2 {
   margin-bottom: 1rem;
 }
