@@ -1,6 +1,6 @@
 # 🌸 Mood Tracker Journal 🌸
 
-A simple and minimalist web app to track your daily moods using emojis, journal entries, and an interactive calendar — built with HTML, CSS, and JavaScript.
+A simple and minimalist web app to track your daily moods using emojis, journal entries, and an interactive calendar. Built with HTML, CSS, and JavaScript.
 
 ![Preview](./Preview1.png)
 ![Preview](./Preview2.png)
@@ -29,6 +29,14 @@ This project was created as a final showcase for the **Hacktiv8 Capstone Porject
 
 1. Clone or download this repository
 2. Open `index.html` in your browser (no installation required)
+3. All data is stored in browser memory (local only)
+
+- This project is live at:
+👉 https://styfie.github.io/Mood-Tracker-Journal/
+
+## 💖 Credits 💖
+Made with love by @styfie
+For educational and portfolio purposes only
 
 ```bash
 git clone https://github.com/styfie/Mood-Tracker-Journal.git
