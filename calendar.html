@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mood Calendar</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1 id="calendar-title">Mood Calendar</h1>
+
+    <div class="calendar-controls">
+      <button id="prev-month">← Prev</button>
+      <select id="month-select"></select>
+      <select id="year-select"></select>
+      <button id="next-month">Next →</button>
+    </div>
+
+    <section class="calendar-section">
+      <div id="calendar"></div>
+    </section>
+
+    <button onclick="window.location.href='index.html'" class="back-button">← Back to Journal</button>
+  </div>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>

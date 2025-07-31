@@ -1,174 +1,161 @@
-// script.js
+// Quotes categorized by mood
+const quotesByMood = {
+  happy: [
+    "Keep smiling, it's contagious 😊",
+    "Today is a beautiful day to be happy!",
+    "Happiness looks good on you!",
+    "Keep the good vibes going 💛"
+  ],
+  sad: [
+    "It's okay to not be okay 💙",
+    "You are stronger than you think",
+    "Worry about nothing. Pray about everything",
+    "This too shall pass 🌧️☀️"
+  ],
+  angry: [
+    "Take a deep breath. You're in control 🔥",
+    "It's okay to feel angry, just don't let it control you.",
+    "Turn your anger into action 💪",
+    "Anger is valid. Let it pass like a storm."
+  ],
+  tired: [
+    "Rest if you must, but don't quit 😴",
+    "You're allowed to take a break. You deserve it",
+    "Recharge, don't give up 🌙",
+    "Even superheroes need to rest 💤"
+  ],
+  normal: [
+    "A calm day is a blessing ☁️",
+    "Not every day needs fireworks, sometimes peace is enough 🌼",
+    "Enjoy the little moments.",
+    "Balance is beautiful ⚖️"
+  ]
+};
 
-// Get all emoji buttons
-const emojiButtons = document.querySelectorAll('.emoji-picker button');
+let selectedMood = null;
 let selectedEmoji = null;
 
-emojiButtons.forEach(button => {
-  button.addEventListener('click', (event) => {
-    // Hapus semua highlight
-    emojiButtons.forEach(btn => btn.classList.remove('selected'));
-    
-    // Tambahkan highlight ke tombol yang dipilih
-    button.classList.add('selected');
-    
-    // Simpan emoji dan mood
-    selectedEmoji = button.textContent;
-
-    const mood = button.parentElement.getAttribute("data-mood");
-    showQuoteForMood(mood);
-  });
-});
-
-function showQuoteForMood(mood) {
-  const quoteBox = document.getElementById("quote-box");
-  let quote = "";
-
-  switch (mood) {
-    case "happy":
-      quote = happyQuotes[Math.floor(Math.random() * happyQuotes.length)];
-      break;
-    case "sad":
-      quote = sadQuotes[Math.floor(Math.random() * sadQuotes.length)];
-      break;
-    case "angry":
-      quote = angryQuotes[Math.floor(Math.random() * angryQuotes.length)];
-      break;
-    case "tired":
-      quote = tiredQuotes[Math.floor(Math.random() * tiredQuotes.length)];
-      break;
-    case "normal":
-      quote = normalQuotes[Math.floor(Math.random() * normalQuotes.length)];
-      break;
-    default:
-      quote = "";
-  }
-
-  quoteBox.textContent = quote;
-}
-
-
+const emojiButtons = document.querySelectorAll('.emoji-picker button');
+const reasonInput = document.querySelector('textarea');
 const saveButton = document.querySelector('.save-btn');
-const journalInput = document.querySelector('textarea');
+const quoteBox = document.getElementById('quote-box');
+const calendarEl = document.getElementById('calendar');
 
-const happyQuotes = [
-  "Keep smiling, it's contagious 😊",
-  "Today is a beautiful day to be happy!",
-  "Happiness looks good on you!",
-  "Keep the good vibes going 💛"
-];
-
-const sadQuotes = [
-  "It's okay to not be okay 💙",
-  "You are stronger than you think",
-  "Worry about nothing. Pray about everything",
-  "This too shall pass 🌧️☀️"
-];
-
-const angryQuotes = [
-  "Take a deep breath. You're in control 🔥",
-  "It's okay to feel angry, just don't let it control you.",
-  "Turn your anger into action 💪",
-  "Anger is valid. Let it pass like a storm."
-];
-
-const tiredQuotes = [
-  "Rest if you must, but don't quit 😴",
-  "You're allowed to take a break. You deserve it",
-  "Recharge, don't give up 🌙",
-  "Even superheroes need to rest 💤"
-];
-
-const normalQuotes = [
-  "A calm day is a blessing ☁️",
-  "Not every day needs fireworks, sometimes peace is enough 🌼",
-  "Enjoy the little moments.",
-  "Balance is beautiful ⚖️"
-];
-
-saveButton.addEventListener('click', () => {
-  if (!selectedEmoji) {
-    alert("Please select a mood emoji!");
-    return;
-  }
-
-  const journalText = journalInput.value.trim();
-  const today = new Date().toISOString().split('T')[0]; // format: "2025-07-24"
-
-  const moodEntry = {
-    emoji: selectedEmoji,
-    journal: journalText
-  };
-  
-  
-  // Save to localStorage
-  localStorage.setItem(today, JSON.stringify(moodEntry));
-
-  alert("Mood saved!");
-  journalInput.value = ""; // Clear journal input
-  emojiButtons.forEach(btn => btn.classList.remove('selected'));
-  selectedEmoji = null;
-
-  // Optional: refresh calendar after saving
-  renderCalendar();
-});
-
-function handleEmojiClick(event) {
-  selectedMood = event.target.getAttribute("data-mood");
-
-  // Highlight selected
-  emojiBoxes.forEach(box => box.classList.remove("selected"));
-  event.target.classList.add("selected");
-
-  // Show related quote
-  const quoteBox = document.getElementById("quote-box");
-  let quote = "";
-
-  switch (selectedMood) {
-    case "happy":
-      quote = happyQuotes[Math.floor(Math.random() * happyQuotes.length)];
-      break;
-    case "sad":
-      quote = sadQuotes[Math.floor(Math.random() * sadQuotes.length)];
-      break;
-    case "angry":
-      quote = angryQuotes[Math.floor(Math.random() * angryQuotes.length)];
-      break;
-    case "tired":
-      quote = tiredQuotes[Math.floor(Math.random() * tiredQuotes.length)];
-      break;
-    case "normal":
-      quote = normalQuotes[Math.floor(Math.random() * normalQuotes.length)];
-      break;
-    default:
-      quote = "";
-  }
-
-  quoteBox.textContent = quote;
+if (emojiButtons.length > 0) {
+  emojiButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      emojiButtons.forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
+      selectedEmoji = button.textContent;
+      selectedMood = button.parentElement.dataset.mood;
+      showQuote(selectedMood);
+    });
+  });
 }
 
+function showQuote(mood) {
+  const quotes = quotesByMood[mood];
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  if (quoteBox) quoteBox.textContent = randomQuote;
+}
+
+if (saveButton) {
+  saveButton.addEventListener('click', () => {
+    if (!selectedEmoji || !selectedMood) {
+      alert("Please select a mood emoji!");
+      return;
+    }
+
+    const journalText = reasonInput.value.trim();
+    const today = new Date().toISOString().split('T')[0];
+
+    const moodEntry = {
+      emoji: selectedEmoji,
+      mood: selectedMood,
+      journal: journalText
+    };
+
+    localStorage.setItem(today, JSON.stringify(moodEntry));
+    alert("Mood saved!");
+
+    reasonInput.value = "";
+    emojiButtons.forEach(btn => btn.classList.remove('selected'));
+    selectedEmoji = null;
+    selectedMood = null;
+  });
+}
+
+// Calendar page logic
+let viewDate = new Date();
+
+function updateCalendarTitle() {
+  const titleEl = document.getElementById("calendar-title");
+  const options = { month: "long", year: "numeric" };
+  titleEl.textContent = `Mood Calendar – ${viewDate.toLocaleDateString("en-US", options)}`;
+}
+
+function populateDropdowns() {
+  const monthSelect = document.getElementById("month-select");
+  const yearSelect = document.getElementById("year-select");
+
+  if (!monthSelect || !yearSelect) return;
+
+  monthSelect.innerHTML = "";
+  yearSelect.innerHTML = "";
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  months.forEach((month, i) => {
+    const option = document.createElement("option");
+    option.value = i;
+    option.text = month;
+    monthSelect.appendChild(option);
+  });
+
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear - 5; y <= currentYear + 5; y++) {
+    const option = document.createElement("option");
+    option.value = y;
+    option.text = y;
+    yearSelect.appendChild(option);
+  }
+
+  monthSelect.value = viewDate.getMonth();
+  yearSelect.value = viewDate.getFullYear();
+
+  monthSelect.addEventListener("change", () => {
+    viewDate.setMonth(parseInt(monthSelect.value));
+    renderCalendar();
+  });
+
+  yearSelect.addEventListener("change", () => {
+    viewDate.setFullYear(parseInt(yearSelect.value));
+    renderCalendar();
+  });
+}
 
 function renderCalendar() {
-  const calendarEl = document.getElementById("calendar");
-  calendarEl.innerHTML = ""; // Clear previous calendar
+  updateCalendarTitle();
+  populateDropdowns();
+  if (!calendarEl) return;
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth(); // 0 = January
+  calendarEl.innerHTML = "";
 
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-  const totalDays = lastDay.getDate();
+  const year = viewDate.getFullYear();
+  const month = viewDate.getMonth();
 
-  const startDay = firstDay.getDay(); // 0 = Sunday
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
 
-  // Add empty boxes before the 1st of the month
-  for (let i = 0; i < startDay; i++) {
+  for (let i = 0; i < firstDay; i++) {
     const empty = document.createElement("div");
     calendarEl.appendChild(empty);
   }
 
-  for (let day = 1; day <= totalDays; day++) {
+  for (let day = 1; day <= lastDate; day++) {
     const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
     const entry = JSON.parse(localStorage.getItem(dateStr));
 
@@ -181,10 +168,24 @@ function renderCalendar() {
       emoji.textContent = entry.emoji;
       emoji.style.fontSize = "1.5rem";
       dayBox.appendChild(emoji);
-
+      dayBox.title = entry.mood;
       dayBox.style.cursor = "pointer";
+
       dayBox.addEventListener("click", () => {
-        alert(`Mood: ${entry.emoji}\nJournal: ${entry.journal || "(no journal)"}`);
+        const newJournal = prompt(`Edit journal for ${entry.emoji} on ${dateStr}:`, entry.journal || "");
+        if (newJournal !== null) {
+          entry.journal = newJournal;
+          localStorage.setItem(dateStr, JSON.stringify(entry));
+          renderCalendar();
+        }
+      });
+
+      dayBox.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        if (confirm(`Delete mood entry for ${dateStr}?`)) {
+          localStorage.removeItem(dateStr);
+          renderCalendar();
+        }
       });
     }
 
@@ -192,5 +193,14 @@ function renderCalendar() {
   }
 }
 
-// Render calendar when page loads
-renderCalendar();
+document.getElementById("prev-month")?.addEventListener("click", () => {
+  viewDate.setMonth(viewDate.getMonth() - 1);
+  renderCalendar();
+});
+
+document.getElementById("next-month")?.addEventListener("click", () => {
+  viewDate.setMonth(viewDate.getMonth() + 1);
+  renderCalendar();
+});
+
+if (calendarEl) renderCalendar();

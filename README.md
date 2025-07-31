@@ -9,7 +9,7 @@ A simple and minimalist web app to track your daily moods using emojis, journal 
 
 - Emoji-based mood selection (😊happy 😢sad 😠angry 😴tired 😐normal)
 - Optional journal input for each mood where user can reflect their feelings 
-- Quotes that match your mood, to uplifting, encouraging, etc.)
+- Quotes that match your mood, to uplifting, encouraging, etc.
 - Mood history displayed in a simple calendar view to visualization of emotional patterns over time
 - Responsive for desktop and mobile (optimized for desktop-only)
 - Clean & soft UI with a beige color palette to keep it simple and pleasing

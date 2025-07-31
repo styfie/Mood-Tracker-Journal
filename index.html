@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Mood Tracker Journal</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
@@ -21,19 +21,12 @@
 
       <textarea id="reason-input" placeholder="Why do you feel this way? (optional)" rows="4"></textarea>
       <button class="save-btn">Save Mood</button>
-
       <div id="quote-box" class="quote-box"></div>
     </section>
 
-    <section class="calendar-section">
-      <h2>Mood Calendar</h2>
-      <div id="calendar">
-        <!-- calendar will go here -->
-      </div>
-    </section>
+    <button class="calendar-nav" onclick="window.location.href='calendar.html'">📅 View Mood Calendar</button>
   </div>
 
   <script src="./script.js" defer></script>
 </body>
 </html>
-
